@@ -1,5 +1,5 @@
 plugins {
-	id "net.fabricmc.fabric-loom-remap" version "${loom_version}"
+	id "net.fabricmc.fabric-loom" version "${loom_version}"
 	id "maven-publish"
 	id "com.modrinth.minotaur" version "2.+"
 }
@@ -11,21 +11,8 @@ repositories {
 	}
 
 	maven {
-		name = "Ladysnake Libs"
-		url = "https://maven.ladysnake.org/releases"
-	}
-
-	exclusiveContent {
-		forRepository {
-			maven {
-				name = "Modrinth"
-				url = "https://api.modrinth.com/maven"
-			}
-		}
-
-		filter {
-			includeGroup "maven.modrinth"
-		}
+		name = "Nucleoid"
+		url = "https://maven.nucleoid.xyz/releases"
 	}
 }
 
@@ -44,24 +31,17 @@ dependencies {
 	// Minecraft
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	// Yarn
-	mappings loom.officialMojangMappings()
-
 	// Fabric
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API
 	["fabric-entity-events-v1", "fabric-rendering-v1"].each {
-		module -> modImplementation(fabricApi.module(module, project.fabric_api_version))
+		module -> implementation(fabricApi.module(module, project.fabric_api_version))
 	}
-	modLocalRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}" // Required for testing because Trinkets expects "fabric-api" to be present.
+	localRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}" // Required for testing because Trinkets expects "fabric-api" to be present.
 
-	// Trinkets Canary
-	modImplementation "maven.modrinth:trinkets-canary:${project.trinkets_api_version}"
-
-	// Cardinal Components API
-	modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
-	modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cca_version}"
+	// Trinkets Updated
+	implementation "eu.pb4:trinkets:${project.trinkets_api_version}"
 }
 
 processResources {
@@ -106,11 +86,11 @@ modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
 	projectId = project.modrinth_id
 	versionName = "Elytra Trinket v${project.version}"
-	uploadFile = remapJar
+	uploadFile = jar
 	additionalFiles = [sourcesJar]
 	dependencies {
 		required.project "fabric-api"
-		required.project "trinkets-canary"
+		required.project "trinkets-updated"
 	}
 	syncBodyFrom = rootProject.file("README.md").text
 }

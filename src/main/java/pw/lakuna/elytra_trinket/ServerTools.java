@@ -2,11 +2,10 @@ package pw.lakuna.elytra_trinket;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
+import eu.pb4.trinkets.api.TrinketAttachment;
+import eu.pb4.trinkets.api.TrinketSlotAccess;
+import eu.pb4.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
@@ -83,18 +82,16 @@ public final class ServerTools {
 	public static List<ItemStack> getEquippedElytraTrinkets(LivingEntity entity) {
 		List<ItemStack> equippedElytraTrinkets = new ArrayList<ItemStack>();
 
-		// Return an empty list if the trinket component isn't present.
-		Optional<TrinketComponent> optionalTrinketComponent = TrinketsApi.getTrinketComponent(entity);
-		if (!optionalTrinketComponent.isPresent()) {
+		// Return an empty list if the trinket attachment isn't present.
+		TrinketAttachment trinketAttachment = TrinketsApi.getAttachment(entity);
+		if (trinketAttachment == null) {
 			return equippedElytraTrinkets;
 		}
 
-		TrinketComponent trinketComponent = optionalTrinketComponent.get();
-
 		// Check each trinket slot with an Elytra.
-		for (Tuple<SlotReference, ItemStack> tuple : trinketComponent.getEquipped(Items.ELYTRA)) {
+		for (Tuple<TrinketSlotAccess, ItemStack> tuple : trinketAttachment.getEquipped(Items.ELYTRA)) {
 			// Skip slots that can't hold Elytra.
-			if (!tuple.getA().inventory().getSlotType().getName().equals("cape")) {
+			if (!tuple.getA().slotType().name().equals("cape")) {
 				continue;
 			}
 

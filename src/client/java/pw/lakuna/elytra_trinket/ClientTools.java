@@ -1,7 +1,7 @@
 package pw.lakuna.elytra_trinket;
 
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRenderEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -23,7 +23,7 @@ public final class ClientTools {
 	/** Enable rendering Elytra when wearing an Elytra in a cape trinket slot. */
 	@SuppressWarnings("unchecked")
 	protected static void registerRenderer() {
-		LivingEntityFeatureRendererRegistrationCallback.EVENT
+		LivingEntityRenderLayerRegistrationCallback.EVENT
 				.register((entityType, entityRenderer, registrationHelper, context) -> {
 					if (!(entityRenderer instanceof AvatarRenderer avatarRenderer)) {
 						return;

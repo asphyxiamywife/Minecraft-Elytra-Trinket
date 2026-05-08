@@ -1,33 +1,30 @@
-name: Build
+# Automatically build the project and run any configured tests for every push
+# and submitted pull request. This can help catch issues that only occur on
+# certain platforms or Java versions, and provides a first line of defence
+# against bad commits.
 
-on:
-  pull_request:
-    types:
-      - opened
-      - edited
-  push:
+name: build
+on: [pull_request, push]
 
 jobs:
   build:
-    name: Build
-    permissions: {}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - name: Check-Out Repository
-        uses: actions/checkout@v4
-      - name: Validate Gradle Wrapper
-        uses: gradle/actions/wrapper-validation@v5
-      - name: Set up JDK
-        uses: actions/setup-java@v4
+      - name: checkout repository
+        uses: actions/checkout@v6
+      - name: validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
+      - name: setup jdk
+        uses: actions/setup-java@v5
         with:
-          java-version: 21
-          distribution: "microsoft"
-      - name: Make Gradle Wrapper Executable
+          java-version: '25'
+          distribution: 'microsoft'
+      - name: make gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: Build
+      - name: build
         run: ./gradlew build
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
+      - name: capture build artifacts
+        uses: actions/upload-artifact@v7
         with:
-          name: build
-          path: build/libs
+          name: Artifacts
+          path: build/libs/
