@@ -14,10 +14,7 @@
 		}
 	],
 	"contact": {
-		"email": "travis@lakuna.pw",
-		"homepage": "https://www.lakuna.pw/",
-		"issues": "https://github.com/Lakuna/Minecraft-Elytra-Trinket/issues",
-		"sources": "https://github.com/Lakuna/Minecraft-Elytra-Trinket"
+		"issues": "https://github.com/asphyxiamywife/Minecraft-Elytra-Trinket/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/${id}/icon.png",
