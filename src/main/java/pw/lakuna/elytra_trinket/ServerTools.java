@@ -7,7 +7,6 @@ import eu.pb4.trinkets.api.TrinketAttachment;
 import eu.pb4.trinkets.api.TrinketSlotAccess;
 import eu.pb4.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +16,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 
 /** Server- and client-side methods for Elytra Trinket. */
 public final class ServerTools {
+	private static final String ELYTRA_TRINKET_SLOT_ID = "chest/cape";
+
 	/**
 	 * Determine whether or not the given item stack contains a usable Elytra.
 	 * 
@@ -89,14 +90,14 @@ public final class ServerTools {
 		}
 
 		// Check each trinket slot with an Elytra.
-		for (Tuple<TrinketSlotAccess, ItemStack> tuple : trinketAttachment.getEquipped(Items.ELYTRA)) {
+		for (TrinketSlotAccess slotAccess : trinketAttachment.equipped(Items.ELYTRA, true)) {
 			// Skip slots that can't hold Elytra.
-			if (!tuple.getA().slotType().name().equals("cape")) {
+			if (!slotAccess.slotType().getId().equals(ELYTRA_TRINKET_SLOT_ID)) {
 				continue;
 			}
 
 			// Skip empty stacks.
-			ItemStack stack = tuple.getB();
+			ItemStack stack = slotAccess.get();
 			if (stack == null || stack.isEmpty()) {
 				continue;
 			}
