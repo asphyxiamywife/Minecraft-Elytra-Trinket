@@ -2,7 +2,7 @@
 
 A Minecraft Fabric mod that adds the Elytra to the cape slot in the Trinkets API.
 
-Requires the [Fabric API](https://modrinth.com/mod/fabric-api) and [Trinkets Updated](https://modrinth.com/mod/trinkets-updated/version/4.0.0-alpha.9+26.1).
+Requires the [Fabric API](https://modrinth.com/mod/fabric-api) and [Trinkets Updated](https://modrinth.com/mod/trinkets-updated).
 
 This mod is just a lightweight version of [Elytra Slot](https://modrinth.com/mod/elytra-slot).
 I made it because I was unsatisfied with how slowly it updated.
